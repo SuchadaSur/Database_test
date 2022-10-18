@@ -1,0 +1,96 @@
+{% extends '../layout.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block banner_text %}
+    {% block title %}
+      {% trans "History - SKCONE" %}
+    {% endblock %}
+{% endblock %}
+
+{% block extra_css %}
+<link href="{% static '/css/table.css' %}" rel="stylesheet" media="screen" />
+{% endblock %}
+
+{% block body %}
+
+<div class="main" id="div_register">
+<div class="maincontent">
+    <div class="main_head">
+   <span style="font-size:250%;margin-left:22px;">{% trans "History" %}</span><br>
+     </div>
+  <hr>
+  <div class="tablecontent"  id="tablecontent">
+    <table id="example" class="table table-striped table-bordered">
+      <thead>
+        <tr>
+            <!-- <th>Detail URL</th> -->
+            <!-- <th>Document Number</th> -->
+            <th>{% trans "Title" %}</th>
+            <th>{% trans "System" %}</th>
+            <th>{% trans "Status" %}</th>
+            <th>{% trans "Department" %}</th>
+            <th>{% trans "Requester" %}</th>  
+            <th>{% trans "Request Date" %}</th>
+            <th>{% trans "Last Update" %}</th>
+            <th>{% trans "Attachment" %}</th>
+            <!-- <th>Approver</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        {% for data in all_data %}
+        <tr>
+          <!-- <td><a href= {{ testRequest.detailUrl }} target="_blank"><img src="/static/image/icons8-document-50.png"></a></td> -->
+          <!-- <td>{{ data.docNumber }}</td>   -->
+          <td>{{ data.title }}</td> 
+          <td>{{ data.system }}</td>
+          {%if data.docStatus == "Complete" %}:
+            <td><img src="/static/image/checked.png" style="width: 20px; height: 20px;"></td>
+          {%elif data.docStatus == "Draft" %}:
+            <td><img src="/static/image/checked.png" style="width: 20px; height: 20px;"></td>
+          {%else%}:
+            <td><img src="/static/image/cancel.png" style="width: 20px; height: 20px;"></td>
+          {%endif%}
+          <td>{{ data.department }}</td>
+          <td>{{ data.requesterCode }}</td>
+          <td>{{ data.requestDate }}</td>
+          <td>{{ data.lastUpdate }}</td> 
+          {%if data.attachment == True %}:
+            <!-- <td><img src="/static/image/checked.png" style="width: 20px; height: 20px;"></td> -->
+            <td>✔</td>
+          {% else %}:
+          <!-- <td><img src="/static/image/cancel.png" style="width: 20px; height: 20px;"></td> -->
+          <td>-</td>
+          {%endif%}
+          <!-- <td>{{ testRequest.approver }}</td> -->
+        </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+  </div>
+</div>
+</div>  
+<script>
+  var btnContainer = document.getElementById("sidebar");
+  var btns = btnContainer.getElementsByClassName("btn");
+  btns[2].classList.add("active");
+</script>
+{% endblock %}
+
+<!-- {% block footer %}
+
+    {% if request.identity_context_data.authenticated == False %}
+        <div id="wrapper">
+            <div id="left">
+                <svg id="check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16"><path fill-rule="evenodd" d="M1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0zM0 8a8 8 0 1116 0A8 8 0 010 8zm11.78-1.72a.75.75 0 00-1.06-1.06L6.75 9.19 5.28 7.72a.75.75 0 00-1.06 1.06l2 2a.75.75 0 001.06 0l4.5-4.5z"></path></svg>
+            </div>
+            <div id="right">
+                Have you updated your app's <em>redirect URI</em> on <a target="_blank" href={{ aad_link }}>Azure Portal</a>?
+                <br>
+                <strong>redirect_uri</strong>: {{ redirect_uri_external_link }}
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %} -->
+
